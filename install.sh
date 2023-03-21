@@ -147,7 +147,7 @@ install_nvm_from_git() {
       }
     else
       # Cloning repo
-      command git clone "$(nvm_source)" --quiet --depth=1 "${INSTALL_DIR}" 2> /dev/null || {
+      command git clone "$(nvm_source)" --depth=1 "${INSTALL_DIR}" 2>&1 || {
         nvm_echo >&2 'Failed to clone nvm repo. Please report this!'
         exit 2
       }
@@ -161,7 +161,7 @@ install_nvm_from_git() {
     nvm_echo >&2 "$fetch_error"
     exit 1
   fi
-  command git -c advice.detachedHead=false --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" checkout -f --quiet FETCH_HEAD || {
+  command git -c advice.detachedHead=false --git-dir="$INSTALL_DIR"/.git --work-tree="$INSTALL_DIR" checkout -f --quiet FETCH_HEAD 2>&1 || {
     nvm_echo >&2 "Failed to checkout the given version $NVM_VERSION. Please report this!"
     exit 2
   }
